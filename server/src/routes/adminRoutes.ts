@@ -31,10 +31,10 @@ export const createAdminRoutes = (
       const bookings = await bookingService.getAllBookings();
       const rooms = await roomService.getAllRooms();
 
-      const activeBookings = bookings.filter(b => b._status === 'active').length;
+      const activeBookings = bookings.filter(b => b.status === 'active').length;
       const totalBookings = bookings.length;
       const totalRooms = rooms.length;
-      const availableRooms = rooms.filter(r => r._status === 'available').length;
+      const availableRooms = rooms.filter(r => r.status === 'available').length;
 
       res.json({
         totalBookings,
@@ -55,11 +55,25 @@ export const createAdminRoutes = (
 
       const room = await roomService.getRoomById(id);
       if (!room) {
-        res.status(404).json({ error: 'Room not found' });
-        return;
+        return res.status(404).json({ error: 'Room not found' });
       }
 
-      room._status = status;
+      switch (status) {
+        case 'available':
+          room.markAsAvailable();
+          break;
+        case 'occupied':
+          room.markAsOccupied();
+          break;
+        case 'maintenance':
+          room.setMaintenance();
+          break;
+        default:
+          return res.status(400).json({ error: 'Invalid status provided' });
+      }
+
+      // Note: In a real application, you would persist this change.
+      // For this example, we'll just return the updated room view.
       res.json(room);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
