@@ -13,7 +13,6 @@ interface AdminStats {
 export const AdminDashboard: React.FC = () => {
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(true);
   const [processingBookingId, setProcessingBookingId] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'approved' | 'cancelled'>('all');
@@ -32,15 +31,13 @@ export const AdminDashboard: React.FC = () => {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [statsData, bookingsData, roomsData] = await Promise.all([
+      const [statsData, bookingsData] = await Promise.all([
         apiService.getAdminStats(),
         apiService.getAdminBookings(),
-        apiService.getRooms(),
       ]);
 
       setStats(statsData);
       setBookings(bookingsData);
-      setRooms(roomsData);
     } catch (error: any) {
       console.error('Failed to load admin data:', error);
     } finally {
