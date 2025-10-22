@@ -3,6 +3,7 @@ import { AuthService } from '../services/AuthService';
 import { BookingService } from '../services/BookingService';
 import { RoomService } from '../services/RoomService';
 import { authMiddleware, adminMiddleware, AuthRequest } from '../middleware/authMiddleware';
+import { BookingStatus } from '../domain/enums/BookingStatus';
 
 export const createAdminRoutes = (
   authService: AuthService,
