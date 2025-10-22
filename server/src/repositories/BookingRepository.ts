@@ -20,7 +20,7 @@ export class BookingRepository implements IRepository<Booking> {
   async findByRoomAndDateRange(roomId: string, start: Date, end: Date): Promise<Booking[]> {
     return Array.from(this.bookings.values()).filter(booking =>
       booking.roomId === roomId &&
-      booking.status === BookingStatus.ACTIVE &&
+      booking.status === BookingStatus.APPROVED &&
       booking.startTime < end &&
       booking.endTime > start
     );

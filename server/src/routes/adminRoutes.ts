@@ -31,7 +31,7 @@ export const createAdminRoutes = (
       const bookings = await bookingService.getAllBookings();
       const rooms = await roomService.getAllRooms();
 
-      const activeBookings = bookings.filter(b => b.status === 'active').length;
+      const activeBookings = bookings.filter(b => b.status === BookingStatus.APPROVED).length;
       const totalBookings = bookings.length;
       const totalRooms = rooms.length;
       const availableRooms = rooms.filter(r => r.status === 'available').length;
