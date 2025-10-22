@@ -10,16 +10,16 @@ interface BookingListProps {
 export const BookingList: React.FC<BookingListProps> = ({ bookings, onCancel }) => {
   const [cancellingId, setCancellingId] = useState<string | null>(null);
 
-  const activeBookings = bookings.filter(b => b._status === 'active');
+  const activeBookings = bookings.filter(b => b._status === 'approved' || b._status === 'pending');
 
   if (activeBookings.length === 0) {
     return (
       <div className="card text-center py-12 animate-fade-in">
         <div className="max-w-md mx-auto">
-          <div className="w-24 h-24 bg-gradient-to-br from-purple-100 to-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <span className="text-5xl">📅</span>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">No Active Bookings</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">No Bookings</h3>
           <p className="text-gray-600">Start by booking a study room from the available rooms!</p>
         </div>
       </div>
@@ -47,12 +47,12 @@ export const BookingList: React.FC<BookingListProps> = ({ bookings, onCancel }) 
             style={{ animationDelay: `${index * 100}ms` }}
           >
             {/* Background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
             <div className="relative flex flex-col md:flex-row md:items-center gap-6">
               {/* Left: Booking Icon and ID */}
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
+                <div className="w-16 h-16 bg-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
                   <span className="text-2xl">✓</span>
                 </div>
                 <div>
@@ -65,7 +65,7 @@ export const BookingList: React.FC<BookingListProps> = ({ bookings, onCancel }) 
               <div className="flex-1 space-y-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Date & Time */}
-                  <div className="p-4 bg-gradient-to-br from-purple-50 to-yellow-50 rounded-xl border border-nu-purple-300">
+                  <div className="p-4 bg-purple-50 rounded-xl border border-nu-purple-300">
                     <p className="text-xs text-nu-purple-900 uppercase tracking-wide font-semibold mb-2">
                       📅 Date & Time
                     </p>
@@ -78,16 +78,36 @@ export const BookingList: React.FC<BookingListProps> = ({ bookings, onCancel }) 
                   </div>
 
                   {/* Duration & Status */}
-                  <div className="p-4 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl border border-nu-gold-600">
+                  <div className="p-4 bg-yellow-50 rounded-xl border border-nu-gold-600">
                     <p className="text-xs text-nu-gold-700 uppercase tracking-wide font-semibold mb-2">
                       ⏱️ Duration & Status
                     </p>
                     <p className="font-bold text-gray-900">{duration} Hour{duration > 1 ? 's' : ''}</p>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold mt-1">
-                      <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                      Active
+                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mt-1 ${
+                      booking._status === 'pending'
+                        ? 'bg-yellow-100 text-yellow-700'
+                        : booking._status === 'approved'
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-gray-100 text-gray-700'
+                    }`}>
+                      <span className={`w-2 h-2 rounded-full ${
+                        booking._status === 'pending'
+                          ? 'bg-yellow-500 animate-pulse'
+                          : booking._status === 'approved'
+                          ? 'bg-green-500 animate-pulse'
+                          : 'bg-gray-500'
+                      }`}></span>
+                      {booking._status === 'pending' ? 'Pending Approval' : booking._status === 'approved' ? 'Approved' : booking._status}
                     </span>
                   </div>
+                </div>
+
+                {/* User Name */}
+                <div className="mt-3 p-3 bg-purple-50 rounded-xl border border-purple-200">
+                  <p className="text-xs text-purple-700 uppercase tracking-wide font-semibold mb-1">
+                    👤 Booked By
+                  </p>
+                  <p className="font-bold text-gray-900">{booking.userName}</p>
                 </div>
 
                 {/* Created At */}
@@ -119,7 +139,7 @@ export const BookingList: React.FC<BookingListProps> = ({ bookings, onCancel }) 
             </div>
 
             {/* Corner decoration */}
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-green-500/10 to-transparent rounded-tr-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-500/10 rounded-tr-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
           </div>
         );
       })}

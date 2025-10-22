@@ -6,9 +6,10 @@ export class Booking extends Entity {
     id: string,
     public readonly roomId: string,
     public readonly userId: string,
+    public readonly userName: string,
     public readonly startTime: Date,
     public readonly endTime: Date,
-    private _status: BookingStatus,
+    private _status: BookingStatus = BookingStatus.PENDING,
     public readonly createdAt: Date = new Date()
   ) {
     super(id);
@@ -52,19 +53,37 @@ export class Booking extends Entity {
   }
 
   isActive(): boolean {
-    return this._status === BookingStatus.ACTIVE;
+    return this._status === BookingStatus.APPROVED;
+  }
+
+  isPending(): boolean {
+    return this._status === BookingStatus.PENDING;
+  }
+
+  approve(): void {
+    if (this._status !== BookingStatus.PENDING) {
+      throw new Error('Only pending bookings can be approved');
+    }
+    this._status = BookingStatus.APPROVED;
+  }
+
+  reject(): void {
+    if (this._status !== BookingStatus.PENDING) {
+      throw new Error('Only pending bookings can be rejected');
+    }
+    this._status = BookingStatus.CANCELLED;
   }
 
   cancel(): void {
-    if (this._status !== BookingStatus.ACTIVE) {
-      throw new Error('Only active bookings can be cancelled');
+    if (this._status !== BookingStatus.APPROVED && this._status !== BookingStatus.PENDING) {
+      throw new Error('Only approved or pending bookings can be cancelled');
     }
     this._status = BookingStatus.CANCELLED;
   }
 
   complete(): void {
-    if (this._status !== BookingStatus.ACTIVE) {
-      throw new Error('Only active bookings can be completed');
+    if (this._status !== BookingStatus.APPROVED) {
+      throw new Error('Only approved bookings can be completed');
     }
     this._status = BookingStatus.COMPLETED;
   }

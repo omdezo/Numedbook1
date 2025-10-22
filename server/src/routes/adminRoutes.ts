@@ -80,5 +80,49 @@ export const createAdminRoutes = (
     }
   });
 
+  // Approve booking
+  router.post('/bookings/:id/approve', async (req: AuthRequest, res: Response) => {
+    try {
+      const { id } = req.params;
+      const booking = await bookingService.approveBooking(id);
+      res.json({ data: booking });
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  // Reject booking
+  router.post('/bookings/:id/reject', async (req: AuthRequest, res: Response) => {
+    try {
+      const { id } = req.params;
+      const booking = await bookingService.rejectBooking(id);
+      res.json({ data: booking });
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  // Delete booking (admin can delete any booking)
+  router.delete('/bookings/:id', async (req: AuthRequest, res: Response) => {
+    try {
+      const { id } = req.params;
+      await bookingService.deleteBooking(id);
+      res.json({ message: 'Booking deleted successfully' });
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  // Re-approve cancelled booking
+  router.post('/bookings/:id/reapprove', async (req: AuthRequest, res: Response) => {
+    try {
+      const { id } = req.params;
+      const booking = await bookingService.reApproveBooking(id);
+      res.json({ data: booking });
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  });
+
   return router;
 };

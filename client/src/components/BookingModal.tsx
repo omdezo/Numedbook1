@@ -87,7 +87,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
       <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-scale-in">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-nu-purple-900 to-nu-gold-700 text-white px-8 py-6 rounded-t-3xl z-10">
+        <div className="sticky top-0 bg-nu-purple-900 text-white px-8 py-6 rounded-t-3xl z-10 shadow-lg">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-3xl font-bold mb-1">Book {room.name}</h2>
@@ -105,9 +105,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         <div className="p-8">
           {/* Success Message */}
           {success && (
-            <div className="mb-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-500 rounded-2xl animate-slide-down">
+            <div className="mb-6 p-4 bg-green-50 border-2 border-green-500 rounded-2xl animate-slide-down">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white text-2xl animate-scale-in">
+                <div className="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center text-white text-2xl animate-scale-in">
                   ✓
                 </div>
                 <div>
@@ -120,9 +120,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-500 rounded-2xl animate-slide-down">
+            <div className="mb-6 p-4 bg-red-50 border-2 border-red-500 rounded-2xl animate-slide-down">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-600 rounded-full flex items-center justify-center text-white text-2xl">
+                <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white text-2xl">
                   ⚠
                 </div>
                 <div className="flex-1">
@@ -141,7 +141,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
           <div className="space-y-6">
             {/* Date Selection */}
-            <div className="p-6 bg-gradient-to-br from-purple-50 to-yellow-50 rounded-2xl border-2 border-nu-purple-300">
+            <div className="p-6 bg-purple-50 rounded-2xl border-2 border-nu-purple-300">
               <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                 📅 Select Date
               </label>
@@ -159,7 +159,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             </div>
 
             {/* Duration Selection */}
-            <div className="p-6 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl border-2 border-nu-gold-600">
+            <div className="p-6 bg-yellow-50 rounded-2xl border-2 border-nu-gold-600">
               <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                 ⏱️ Booking Duration
               </label>
@@ -168,7 +168,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   onClick={() => setDuration(1)}
                   className={`p-4 rounded-xl border-2 transition-all duration-200 ${
                     duration === 1
-                      ? 'border-nu-gold-700 bg-gradient-to-br from-nu-purple-900 to-nu-gold-700 text-white shadow-lg scale-105'
+                      ? 'border-nu-gold-700 bg-nu-purple-900 text-white shadow-lg scale-105'
                       : 'border-nu-gold-300 bg-white hover:border-nu-gold-700'
                   }`}
                 >
@@ -179,7 +179,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   onClick={() => setDuration(2)}
                   className={`p-4 rounded-xl border-2 transition-all duration-200 ${
                     duration === 2
-                      ? 'border-nu-gold-700 bg-gradient-to-br from-nu-purple-900 to-nu-gold-700 text-white shadow-lg scale-105'
+                      ? 'border-nu-gold-700 bg-nu-purple-900 text-white shadow-lg scale-105'
                       : 'border-nu-gold-300 bg-white hover:border-nu-gold-700'
                   }`}
                 >
@@ -205,7 +205,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   {[...Array(9)].map((_, i) => (
                     <div
                       key={i}
-                      className="h-16 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-xl animate-shimmer"
+                      className="h-16 bg-gray-200 rounded-xl animate-pulse"
                       style={{ backgroundSize: '1000px 100%' }}
                     />
                   ))}
@@ -224,7 +224,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                         onClick={() => setSelectedStartSlot(slot.startHour)}
                         className={`p-4 rounded-xl border-2 transition-all duration-200 transform ${
                           isSelected
-                            ? 'border-nu-purple-900 bg-gradient-to-br from-nu-purple-900 to-nu-gold-700 text-white shadow-xl scale-105'
+                            ? 'border-nu-purple-900 bg-nu-purple-900 text-white shadow-xl scale-105'
                             : isDisabled
                             ? 'border-gray-200 bg-gray-100 cursor-not-allowed opacity-60'
                             : 'border-gray-300 bg-white hover:border-nu-purple-500 hover:shadow-lg hover:scale-105'
@@ -246,7 +246,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
             {/* Selected Summary */}
             {selectedStartSlot !== null && canBookSlots && nextSlotAvailable && (
-              <div className="p-6 bg-gradient-to-r from-nu-purple-900 to-nu-gold-700 text-white rounded-2xl shadow-xl animate-slide-up">
+              <div className="p-6 bg-nu-purple-900 text-white rounded-2xl shadow-xl animate-slide-up">
                 <p className="text-sm font-semibold mb-2 opacity-90">📋 Booking Summary</p>
                 <div className="space-y-1">
                   <p className="text-lg font-bold">{room.name}</p>

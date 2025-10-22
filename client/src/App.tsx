@@ -25,6 +25,13 @@ function App() {
     }
   }, [isAuthenticated]);
 
+  // Redirect admin users to dashboard immediately after login
+  useEffect(() => {
+    if (user && user.role.toUpperCase() === 'ADMIN') {
+      setActiveTab('admin');
+    }
+  }, [user]);
+
   const loadData = async () => {
     try {
       setLoading(true);
@@ -57,9 +64,9 @@ function App() {
   // Show auth loading
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 animate-pulse shadow-2xl p-4">
+          <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 animate-pulse shadow-2xl p-4 border-2 border-gray-100">
             <img src="/Logo/logoNu.png" alt="National University Logo" className="w-full h-full object-contain" />
           </div>
           <div className="flex items-center gap-3 justify-center">
@@ -82,12 +89,18 @@ function App() {
     return <Login onSwitchToRegister={() => setShowRegister(true)} />;
   }
 
-  const activeBookingsCount = bookings.filter(b => b._status === 'active').length;
+  const activeBookingsCount = bookings.filter(b => b._status === 'approved' || b._status === 'pending').length;
+
+  // Determine which tab to show - admins default to admin dashboard
+  let currentTab = activeTab;
+  if (user?.role && user.role.toUpperCase() === 'ADMIN' && activeTab === 'rooms') {
+    currentTab = 'admin';
+  }
 
   return (
     <div className="min-h-screen">
       {/* Compact Header */}
-      <header className="relative bg-gradient-to-r from-nu-purple-900 via-nu-purple-800 to-nu-gold-700">
+      <header className="relative bg-nu-purple-900 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             {/* Logo and Title */}
@@ -122,7 +135,7 @@ function App() {
             {/* User Profile */}
             {user && (
               <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2">
-                <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                <div className="w-10 h-10 bg-nu-gold-700 rounded-full flex items-center justify-center text-white text-sm font-bold">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
                 <div className="hidden sm:block text-left">
@@ -152,7 +165,7 @@ function App() {
             <button
               onClick={() => setActiveTab('rooms')}
               className={`px-4 py-3 font-bold transition-all duration-200 relative whitespace-nowrap ${
-                activeTab === 'rooms'
+                currentTab === 'rooms'
                   ? 'text-nu-purple-900'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
@@ -162,14 +175,14 @@ function App() {
                 <span className="hidden sm:inline">Available Rooms</span>
                 <span className="sm:hidden">Rooms</span>
               </span>
-              {activeTab === 'rooms' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-nu-purple-900 to-nu-gold-700 rounded-t-full" />
+              {currentTab === 'rooms' && (
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-nu-gold-700 rounded-t-full" />
               )}
             </button>
             <button
               onClick={() => setActiveTab('bookings')}
               className={`px-4 py-3 font-bold transition-all duration-200 relative whitespace-nowrap ${
-                activeTab === 'bookings'
+                currentTab === 'bookings'
                   ? 'text-nu-purple-900'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
@@ -179,31 +192,34 @@ function App() {
                 <span className="hidden sm:inline">My Bookings</span>
                 <span className="sm:hidden">Bookings</span>
                 {activeBookingsCount > 0 && (
-                  <span className="px-1.5 py-0.5 bg-gradient-to-r from-nu-purple-900 to-nu-gold-700 text-white text-xs font-bold rounded-full min-w-[18px] text-center">
+                  <span className="px-1.5 py-0.5 bg-nu-gold-700 text-white text-xs font-bold rounded-full min-w-[18px] text-center">
                     {activeBookingsCount}
                   </span>
                 )}
               </span>
-              {activeTab === 'bookings' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-nu-purple-900 to-nu-gold-700 rounded-t-full" />
+              {currentTab === 'bookings' && (
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-nu-gold-700 rounded-t-full" />
               )}
             </button>
             {isAdmin && (
               <button
                 onClick={() => setActiveTab('admin')}
                 className={`px-4 py-3 font-bold transition-all duration-200 relative whitespace-nowrap ${
-                  activeTab === 'admin'
-                    ? 'text-nu-purple-900'
-                    : 'text-gray-600 hover:text-gray-900'
+                  currentTab === 'admin'
+                    ? 'text-nu-purple-900 bg-white/10 backdrop-blur-sm'
+                    : 'text-gray-600 hover:text-nu-purple-900'
                 }`}
               >
                 <span className="flex items-center gap-2 text-sm">
                   <span>👨‍💼</span>
                   <span className="hidden sm:inline">Admin Dashboard</span>
                   <span className="sm:hidden">Admin</span>
+                  <span className="px-1.5 py-0.5 bg-nu-gold-700 text-white rounded-full text-xs font-bold">
+                    {bookings.filter(b => b._status === 'pending').length}
+                  </span>
                 </span>
-                {activeTab === 'admin' && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-nu-purple-900 to-nu-gold-700 rounded-t-full" />
+                {currentTab === 'admin' && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-nu-gold-700 rounded-t-full" />
                 )}
               </button>
             )}
@@ -216,7 +232,7 @@ function App() {
         <div className="fixed top-4 right-4 z-50 animate-slide-down">
           <div className="bg-white rounded-2xl shadow-2xl border-2 border-red-500 p-4 max-w-md">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-600 rounded-full flex items-center justify-center text-white flex-shrink-0">
+              <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white flex-shrink-0">
                 ⚠
               </div>
               <div className="flex-1">
@@ -236,7 +252,7 @@ function App() {
 
       {/* Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {activeTab === 'rooms' && (
+        {currentTab === 'rooms' && (
           <div>
             <div className="mb-6 animate-fade-in">
               <h2 className="text-2xl font-bold text-gray-900 mb-1">
@@ -269,7 +285,7 @@ function App() {
           </div>
         )}
 
-        {activeTab === 'bookings' && (
+        {currentTab === 'bookings' && (
           <div>
             <div className="mb-6 animate-fade-in">
               <h2 className="text-2xl font-bold text-gray-900 mb-1">
@@ -286,7 +302,7 @@ function App() {
           </div>
         )}
 
-        {activeTab === 'admin' && isAdmin && (
+        {currentTab === 'admin' && isAdmin && (
           <AdminDashboard />
         )}
       </main>
@@ -301,7 +317,7 @@ function App() {
       )}
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-nu-purple-900 to-nu-purple-800 text-white mt-20">
+      <footer className="bg-nu-purple-900 text-white mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>

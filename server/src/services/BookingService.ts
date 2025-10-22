@@ -12,6 +12,7 @@ export class BookingService {
 
   async createBooking(
     userId: string,
+    userName: string,
     roomId: string,
     startTime: Date,
     endTime: Date
@@ -26,39 +27,49 @@ export class BookingService {
       throw new Error('Room is not available');
     }
 
-    // Check for conflicts
+    // Check if user already has a booking on the same day
+    const bookingDate = new Date(startTime);
+    bookingDate.setHours(0, 0, 0, 0);
+    const dayEnd = new Date(bookingDate);
+    dayEnd.setHours(23, 59, 59, 999);
+
+    const userBookings = await this.bookingRepository.findByUserId(userId);
+    const bookingsOnSameDay = userBookings.filter(booking => {
+      const bookingDay = new Date(booking.startTime);
+      bookingDay.setHours(0, 0, 0, 0);
+      return (
+        bookingDay.getTime() === bookingDate.getTime() &&
+        (booking.isActive() || booking.isPending())
+      );
+    });
+
+    if (bookingsOnSameDay.length > 0) {
+      throw new Error('You can only book one room per day');
+    }
+
+    // Check for conflicts with approved bookings only
     const conflicts = await this.bookingRepository.findByRoomAndDateRange(
       roomId,
       startTime,
       endTime
     );
 
-    if (conflicts.length > 0) {
+    const approvedConflicts = conflicts.filter(b => b.isActive());
+    if (approvedConflicts.length > 0) {
       throw new Error('Time slot already booked');
     }
 
-    // Check user doesn't have more than 2 active bookings
-    const userBookings = await this.bookingRepository.findByUserId(userId);
-    const activeBookings = userBookings.filter(b => b.isActive());
-    if (activeBookings.length >= 2) {
-      throw new Error('Maximum 2 active bookings per user');
-    }
-
-    // Create booking
+    // Create booking with PENDING status
     const booking = new Booking(
       uuidv4(),
       roomId,
       userId,
+      userName,
       startTime,
-      endTime,
-      BookingStatus.ACTIVE
+      endTime
     );
 
     const savedBooking = await this.bookingRepository.save(booking);
-
-    // Update room status
-    room.markAsOccupied();
-    await this.roomRepository.save(room);
 
     return savedBooking;
   }
@@ -87,6 +98,70 @@ export class BookingService {
 
   async getAllBookings(): Promise<Booking[]> {
     return await this.bookingRepository.findAll();
+  }
+
+  async approveBooking(bookingId: string): Promise<Booking> {
+    const booking = await this.bookingRepository.findById(bookingId);
+
+    if (!booking) {
+      throw new Error('Booking not found');
+    }
+
+    booking.approve();
+    await this.bookingRepository.save(booking);
+
+    // Update room status
+    const room = await this.roomRepository.findById(booking.roomId);
+    if (room) {
+      room.markAsOccupied();
+      await this.roomRepository.save(room);
+    }
+
+    return booking;
+  }
+
+  async rejectBooking(bookingId: string): Promise<Booking> {
+    const booking = await this.bookingRepository.findById(bookingId);
+
+    if (!booking) {
+      throw new Error('Booking not found');
+    }
+
+    booking.reject();
+    await this.bookingRepository.save(booking);
+
+    return booking;
+  }
+
+  async deleteBooking(bookingId: string): Promise<void> {
+    const booking = await this.bookingRepository.findById(bookingId);
+
+    if (!booking) {
+      throw new Error('Booking not found');
+    }
+
+    await this.bookingRepository.delete(bookingId);
+
+    // Update room availability
+    await this.updateRoomAvailability(booking.roomId);
+  }
+
+  async reApproveBooking(bookingId: string): Promise<Booking> {
+    const booking = await this.bookingRepository.findById(bookingId);
+
+    if (!booking) {
+      throw new Error('Booking not found');
+    }
+
+    if (booking.status !== BookingStatus.CANCELLED) {
+      throw new Error('Only cancelled bookings can be re-approved');
+    }
+
+    // Change status back to pending for admin to approve
+    booking['_status'] = BookingStatus.PENDING;
+    await this.bookingRepository.save(booking);
+
+    return booking;
   }
 
   async getAvailableSlots(roomId: string, date: Date): Promise<any[]> {

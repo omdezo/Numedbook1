@@ -56,9 +56,9 @@ export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-500 rounded-xl animate-slide-down">
+            <div className="mb-6 p-4 bg-red-50 border-2 border-red-500 rounded-xl animate-slide-down">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-600 rounded-full flex items-center justify-center text-white text-lg flex-shrink-0">
+                <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white text-lg flex-shrink-0">
                   ⚠
                 </div>
                 <p className="text-sm text-red-700">{error}</p>
@@ -114,9 +114,9 @@ export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
 
           {/* Divider */}
           <div className="my-6 flex items-center gap-4">
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            <div className="flex-1 h-px bg-gray-300"></div>
             <span className="text-sm text-gray-500">Quick Access</span>
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            <div className="flex-1 h-px bg-gray-300"></div>
           </div>
 
           {/* Quick Login Buttons */}
@@ -124,10 +124,10 @@ export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
             <button
               onClick={() => quickLogin('admin@nu.edu.om', 'admin123')}
               disabled={loading}
-              className="w-full p-4 bg-gradient-to-r from-purple-50 to-yellow-50 hover:from-purple-100 hover:to-yellow-100 border-2 border-nu-purple-300 rounded-xl transition-all duration-200 hover:shadow-lg disabled:opacity-50"
+              className="w-full p-4 bg-purple-50 hover:bg-purple-100 border-2 border-nu-purple-300 rounded-xl transition-all duration-200 hover:shadow-lg disabled:opacity-50"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-nu-purple-900 to-nu-gold-700 rounded-lg flex items-center justify-center text-white">
+                <div className="w-10 h-10 bg-nu-purple-900 rounded-lg flex items-center justify-center text-white">
                   👨‍💼
                 </div>
                 <div className="text-left">
@@ -140,10 +140,10 @@ export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
             <button
               onClick={() => quickLogin('student@nu.edu.om', 'student123')}
               disabled={loading}
-              className="w-full p-4 bg-gradient-to-r from-yellow-50 to-orange-50 hover:from-yellow-100 hover:to-orange-100 border-2 border-nu-gold-600 rounded-xl transition-all duration-200 hover:shadow-lg disabled:opacity-50"
+              className="w-full p-4 bg-yellow-50 hover:bg-yellow-100 border-2 border-nu-gold-600 rounded-xl transition-all duration-200 hover:shadow-lg disabled:opacity-50"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-nu-gold-700 to-orange-500 rounded-lg flex items-center justify-center text-white">
+                <div className="w-10 h-10 bg-nu-gold-700 rounded-lg flex items-center justify-center text-white">
                   👨‍🎓
                 </div>
                 <div className="text-left">

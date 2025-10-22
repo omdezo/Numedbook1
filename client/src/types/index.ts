@@ -10,9 +10,10 @@ export interface Booking {
   id: string;
   roomId: string;
   userId: string;
+  userName: string;
   startTime: string;
   endTime: string;
-  _status: string;
+  _status: 'pending' | 'approved' | 'cancelled' | 'completed';
   createdAt: string;
 }
 

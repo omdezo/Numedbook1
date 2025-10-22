@@ -55,9 +55,9 @@ export const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-500 rounded-xl animate-slide-down">
+            <div className="mb-6 p-4 bg-red-50 border-2 border-red-500 rounded-xl animate-slide-down">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-600 rounded-full flex items-center justify-center text-white text-lg flex-shrink-0">
+                <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white text-lg flex-shrink-0">
                   ⚠
                 </div>
                 <p className="text-sm text-red-700">{error}</p>

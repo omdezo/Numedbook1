@@ -1,16 +1,20 @@
 import { Request, Response } from 'express';
 import { BaseController } from './BaseController';
 import { BookingService } from '../services/BookingService';
+import { AuthRequest } from '../middleware/authMiddleware';
 
 export class BookingController extends BaseController {
   constructor(private readonly bookingService: BookingService) {
     super();
   }
 
-  async createBooking(req: Request, res: Response): Promise<Response> {
+  async createBooking(req: AuthRequest, res: Response): Promise<Response> {
     try {
       const { roomId, startTime, endTime } = req.body;
-      const userId = req.headers['x-user-id'] as string || 'demo-user'; // Mock user for MVP
+
+      // Get user from auth context or fallback to header
+      const userId = req.user?.id || (req.headers['x-user-id'] as string) || 'demo-user';
+      const userName = req.user?.email.split('@')[0] || 'Demo User';
 
       if (!roomId || !startTime || !endTime) {
         return this.sendError(res, 'Missing required fields', 400);
@@ -18,6 +22,7 @@ export class BookingController extends BaseController {
 
       const booking = await this.bookingService.createBooking(
         userId,
+        userName,
         roomId,
         new Date(startTime),
         new Date(endTime)

@@ -127,6 +127,30 @@ class ApiService {
       body: JSON.stringify({ status }),
     });
   }
+
+  async approveBooking(bookingId: string): Promise<Booking> {
+    return this.fetchJSON<Booking>(`/admin/bookings/${bookingId}/approve`, {
+      method: 'POST',
+    });
+  }
+
+  async rejectBooking(bookingId: string): Promise<Booking> {
+    return this.fetchJSON<Booking>(`/admin/bookings/${bookingId}/reject`, {
+      method: 'POST',
+    });
+  }
+
+  async deleteBooking(bookingId: string): Promise<void> {
+    return this.fetchJSON(`/admin/bookings/${bookingId}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async reApproveBooking(bookingId: string): Promise<Booking> {
+    return this.fetchJSON<Booking>(`/admin/bookings/${bookingId}/reapprove`, {
+      method: 'POST',
+    });
+  }
 }
 
 export const apiService = new ApiService();

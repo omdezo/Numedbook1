@@ -42,13 +42,13 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onSelect }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-nu-purple-500/5 to-nu-gold-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      {/* Overlay on hover */}
+      <div className="absolute inset-0 bg-nu-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
       {/* Header */}
       <div className="relative flex justify-between items-start mb-6">
         <div>
-          <h3 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+          <h3 className="text-2xl font-bold text-gray-900">
             {room.name}
           </h3>
           <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
@@ -63,9 +63,9 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onSelect }) => {
       </div>
 
       {/* Capacity with icon */}
-      <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 to-yellow-50 rounded-xl border border-nu-purple-200">
+      <div className="mb-6 p-4 bg-purple-50 rounded-xl border border-nu-purple-200">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-nu-purple-900 to-nu-gold-700 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+          <div className="w-12 h-12 bg-nu-purple-900 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
             {room.capacity}
           </div>
           <div>
@@ -84,7 +84,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onSelect }) => {
           {room.amenities.map((amenity, index) => (
             <span
               key={index}
-              className="px-3 py-1.5 bg-gradient-to-r from-white to-purple-50 text-nu-purple-900 rounded-lg text-xs font-medium border border-purple-200 hover:border-nu-gold-700 transition-colors duration-200 shadow-sm"
+              className="px-3 py-1.5 bg-white text-nu-purple-900 rounded-lg text-xs font-medium border border-purple-200 hover:border-nu-gold-700 transition-colors duration-200 shadow-sm"
               style={{ animationDelay: `${index * 50}ms` }}
             >
               {amenity}
@@ -110,7 +110,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onSelect }) => {
       )}
 
       {/* Corner decoration */}
-      <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-nu-gold-500/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-24 h-24 bg-nu-gold-500/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
   );
 };
