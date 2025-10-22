@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Room, Booking } from './types';
 import { apiService } from './services/ApiService';
 import { useAuth } from './context/AuthContext';
