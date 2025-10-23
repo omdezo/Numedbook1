@@ -7,16 +7,17 @@ export class RoomRepository implements IRepository<Room> {
   private rooms: Map<string, Room> = new Map();
 
   constructor() {
-    // Initialize with 4 rooms
+    // Initialize with 5 rooms
     this.seedRooms();
   }
 
   private seedRooms(): void {
     const roomsData = [
-      { name: 'Room A', capacity: 4, amenities: ['Whiteboard', 'Projector', 'WiFi'] },
-      { name: 'Room B', capacity: 6, amenities: ['Whiteboard', 'TV Screen', 'WiFi'] },
-      { name: 'Room C', capacity: 8, amenities: ['Whiteboard', 'Projector', 'WiFi', 'Video Conference'] },
-      { name: 'Room D', capacity: 10, amenities: ['Whiteboard', 'Projector', 'WiFi', 'Video Conference', 'Sound System'] }
+      { name: 'Room A', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
+      { name: 'Room B', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
+      { name: 'Room C', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
+      { name: 'Room D', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
+      { name: 'Room E', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] }
     ];
 
     roomsData.forEach(data => {

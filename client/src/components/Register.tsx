@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 interface RegisterProps {
@@ -7,6 +8,7 @@ interface RegisterProps {
 
 export const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
   const { register } = useAuth();
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,6 +35,8 @@ export const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
 
     try {
       await register(name, email, password);
+      // Navigate to userpage after registration (students only can register)
+      navigate('/userpage');
     } catch (err: any) {
       setError(err.message);
     } finally {

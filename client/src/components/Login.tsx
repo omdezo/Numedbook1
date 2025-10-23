@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 interface LoginProps {
@@ -7,6 +8,7 @@ interface LoginProps {
 
 export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -19,6 +21,13 @@ export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
 
     try {
       await login(email, password);
+      // Navigate based on role
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      if (user.role?.toUpperCase() === 'ADMIN') {
+        navigate('/admin');
+      } else {
+        navigate('/userpage');
+      }
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -34,6 +43,13 @@ export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
 
     try {
       await login(userEmail, userPassword);
+      // Navigate based on role
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      if (user.role?.toUpperCase() === 'ADMIN') {
+        navigate('/admin');
+      } else {
+        navigate('/userpage');
+      }
     } catch (err: any) {
       setError(err.message);
     } finally {
