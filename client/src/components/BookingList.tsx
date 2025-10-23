@@ -16,8 +16,13 @@ export const BookingList: React.FC<BookingListProps> = ({ bookings, onCancel }) 
     return (
       <div className="card text-center py-12 animate-fade-in">
         <div className="max-w-md mx-auto">
-          <div className="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <span className="text-5xl">📅</span>
+          <div className="relative mx-auto mb-6" style={{ width: '100px', height: '100px' }}>
+            <div
+              className="w-24 h-24 bg-purple-100 flex items-center justify-center mx-auto transition-all duration-500 hover:scale-110 hover:rotate-12"
+              style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}
+            >
+              <span className="text-5xl transform hover:-rotate-12 transition-transform duration-500">📅</span>
+            </div>
           </div>
           <h3 className="text-2xl font-bold text-gray-900 mb-2">No Bookings</h3>
           <p className="text-gray-600">Start by booking a study room from the available rooms!</p>
@@ -49,11 +54,19 @@ export const BookingList: React.FC<BookingListProps> = ({ bookings, onCancel }) 
             {/* Background gradient */}
             <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
+            {/* Hexagonal background pattern */}
+            <div className="absolute -right-12 -top-12 w-40 h-40 bg-emerald-500 opacity-5 transition-all duration-700 group-hover:rotate-180 group-hover:scale-125 pointer-events-none" style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}></div>
+
             <div className="relative flex flex-col md:flex-row md:items-center gap-6">
               {/* Left: Booking Icon and ID */}
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
-                  <span className="text-2xl">✓</span>
+                <div className="relative">
+                  <div
+                    className="w-16 h-16 bg-emerald-600 flex items-center justify-center text-white shadow-lg flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+                    style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}
+                  >
+                    <span className="text-2xl relative z-10 transform group-hover:-rotate-12 transition-transform duration-300">✓</span>
+                  </div>
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Booking ID</p>

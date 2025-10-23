@@ -13,11 +13,11 @@ export class RoomRepository implements IRepository<Room> {
 
   private seedRooms(): void {
     const roomsData = [
-      { name: 'Room A', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
-      { name: 'Room B', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
-      { name: 'Room C', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
-      { name: 'Room D', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
-      { name: 'Room E', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] }
+      { name: 'Room 1', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
+      { name: 'Room 2', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
+      { name: 'Room 3', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
+      { name: 'Room 4', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] },
+      { name: 'Room 5', capacity: 3, amenities: ['Table', 'Chairs', 'WiFi'] }
     ];
 
     roomsData.forEach(data => {

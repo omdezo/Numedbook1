@@ -10,6 +10,31 @@
 }
 
 @layer components {
+  /* Hexagon Styles */
+  .hexagon-container {
+    position: relative;
+    width: 100px;
+    height: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hexagon-shape {
+    width: 100px;
+    height: 57.74px;
+    background: currentColor;
+    position: relative;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    transition: all 0.3s ease;
+  }
+
+  .hexagon-sm {
+    width: 70px;
+    height: 40.41px;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  }
+
   .btn {
     @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md;
   }
@@ -27,11 +52,11 @@
   }
 
   .card {
-    @apply bg-white/80 backdrop-blur-sm rounded-2xl shadow-soft p-6 hover:shadow-xl transition-all duration-300 border border-white/20 hover:border-nu-purple-300;
+    @apply bg-white/80 backdrop-blur-sm rounded-2xl shadow-soft p-6 hover:shadow-xl transition-all duration-500 border border-white/20 hover:border-nu-purple-300;
   }
 
   .card-interactive {
-    @apply card cursor-pointer transform hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98];
+    @apply card cursor-pointer transform hover:-translate-y-2 hover:scale-[1.03] active:scale-[0.98] hover:shadow-2xl;
   }
 
   .input {
@@ -60,5 +85,60 @@
 
   .glass {
     @apply bg-white/70 backdrop-blur-md border border-white/20;
+  }
+
+  .shadow-glow {
+    box-shadow: 0 0 20px rgba(79, 70, 229, 0.4), 0 0 40px rgba(79, 70, 229, 0.2);
+  }
+
+  .shadow-glow-green {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(16, 185, 129, 0.2);
+  }
+
+  .shadow-glow-gold {
+    box-shadow: 0 0 20px rgba(202, 138, 4, 0.4), 0 0 40px rgba(202, 138, 4, 0.2);
+  }
+}
+
+@layer utilities {
+  @keyframes rotate-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-rotate-slow {
+    animation: rotate-slow 20s linear infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
   }
 }

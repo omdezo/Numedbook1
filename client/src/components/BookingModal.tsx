@@ -107,8 +107,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           {success && (
             <div className="mb-6 p-4 bg-green-50 border-2 border-green-500 rounded-2xl animate-slide-down">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center text-white text-2xl animate-scale-in">
-                  ✓
+                <div className="relative">
+                  <div
+                    className="w-12 h-12 bg-emerald-600 flex items-center justify-center text-white text-2xl animate-scale-in shadow-lg"
+                    style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}
+                  >
+                    <span className="relative z-10">✓</span>
+                  </div>
                 </div>
                 <div>
                   <p className="font-bold text-green-900">Booking Confirmed!</p>
@@ -122,8 +127,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           {error && (
             <div className="mb-6 p-4 bg-red-50 border-2 border-red-500 rounded-2xl animate-slide-down">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white text-2xl">
-                  ⚠
+                <div className="relative">
+                  <div
+                    className="w-12 h-12 bg-red-500 flex items-center justify-center text-white text-2xl shadow-lg"
+                    style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}
+                  >
+                    <span className="relative z-10">⚠</span>
+                  </div>
                 </div>
                 <div className="flex-1">
                   <p className="font-bold text-red-900">Error</p>
@@ -141,51 +151,61 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
           <div className="space-y-6">
             {/* Date Selection */}
-            <div className="p-6 bg-purple-50 rounded-2xl border-2 border-nu-purple-300">
-              <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
-                📅 Select Date
-              </label>
-              <p className="text-xs text-gray-600 mb-3">Bookings must be made at least 1 day in advance</p>
-              <input
-                type="date"
-                className="input text-lg font-semibold"
-                value={format(selectedDate, 'yyyy-MM-dd')}
-                min={format(addDays(new Date(), 1), 'yyyy-MM-dd')}
-                onChange={(e) => {
-                  setSelectedDate(new Date(e.target.value));
-                  setSelectedStartSlot(null);
-                }}
-              />
+            <div className="p-6 bg-purple-50 rounded-2xl border-2 border-nu-purple-300 relative overflow-hidden group">
+              {/* Hexagonal background pattern */}
+              <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-nu-purple-900 opacity-5 transition-all duration-700 group-hover:rotate-180 group-hover:scale-125" style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}></div>
+
+              <div className="relative z-10">
+                <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
+                  📅 Select Date
+                </label>
+                <p className="text-xs text-gray-600 mb-3">Bookings must be made at least 1 day in advance</p>
+                <input
+                  type="date"
+                  className="input text-lg font-semibold"
+                  value={format(selectedDate, 'yyyy-MM-dd')}
+                  min={format(addDays(new Date(), 1), 'yyyy-MM-dd')}
+                  onChange={(e) => {
+                    setSelectedDate(new Date(e.target.value));
+                    setSelectedStartSlot(null);
+                  }}
+                />
+              </div>
             </div>
 
             {/* Duration Selection */}
-            <div className="p-6 bg-yellow-50 rounded-2xl border-2 border-nu-gold-600">
-              <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
-                ⏱️ Booking Duration
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  onClick={() => setDuration(1)}
-                  className={`p-4 rounded-xl border-2 transition-all duration-200 ${
-                    duration === 1
-                      ? 'border-nu-gold-700 bg-nu-purple-900 text-white shadow-lg scale-105'
-                      : 'border-nu-gold-300 bg-white hover:border-nu-gold-700'
-                  }`}
-                >
-                  <p className="text-2xl font-bold">1</p>
-                  <p className="text-sm">Hour</p>
-                </button>
-                <button
-                  onClick={() => setDuration(2)}
-                  className={`p-4 rounded-xl border-2 transition-all duration-200 ${
-                    duration === 2
-                      ? 'border-nu-gold-700 bg-nu-purple-900 text-white shadow-lg scale-105'
-                      : 'border-nu-gold-300 bg-white hover:border-nu-gold-700'
-                  }`}
-                >
-                  <p className="text-2xl font-bold">2</p>
-                  <p className="text-sm">Hours</p>
-                </button>
+            <div className="p-6 bg-yellow-50 rounded-2xl border-2 border-nu-gold-600 relative overflow-hidden group">
+              {/* Hexagonal background pattern */}
+              <div className="absolute -left-8 -top-8 w-32 h-32 bg-nu-gold-700 opacity-5 transition-all duration-700 group-hover:rotate-180 group-hover:scale-125" style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}></div>
+
+              <div className="relative z-10">
+                <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
+                  ⏱️ Booking Duration
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => setDuration(1)}
+                    className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                      duration === 1
+                        ? 'border-nu-gold-700 bg-nu-purple-900 text-white shadow-lg scale-105'
+                        : 'border-nu-gold-300 bg-white hover:border-nu-gold-700'
+                    }`}
+                  >
+                    <p className="text-2xl font-bold">1</p>
+                    <p className="text-sm">Hour</p>
+                  </button>
+                  <button
+                    onClick={() => setDuration(2)}
+                    className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                      duration === 2
+                        ? 'border-nu-gold-700 bg-nu-purple-900 text-white shadow-lg scale-105'
+                        : 'border-nu-gold-300 bg-white hover:border-nu-gold-700'
+                    }`}
+                  >
+                    <p className="text-2xl font-bold">2</p>
+                    <p className="text-sm">Hours</p>
+                  </button>
+                </div>
               </div>
             </div>
 

@@ -136,8 +136,13 @@ const AdminDashboard: React.FC = () => {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
-          <div className="w-16 h-16 bg-nu-purple-900 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
-            <span className="text-3xl">👨‍💼</span>
+          <div className="relative mx-auto mb-4" style={{ width: '64px', height: '64px' }}>
+            <div
+              className="w-16 h-16 bg-nu-purple-900 flex items-center justify-center mx-auto animate-pulse shadow-xl"
+              style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}
+            >
+              <span className="text-3xl relative z-10">👨‍💼</span>
+            </div>
           </div>
           <p className="text-gray-600 font-semibold">Loading dashboard...</p>
         </div>
@@ -164,54 +169,86 @@ const AdminDashboard: React.FC = () => {
       {/* Statistics Cards */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="card bg-yellow-50 border-2 border-yellow-200">
-            <div className="flex items-center justify-between">
+          <div className="card bg-yellow-50 border-2 border-yellow-200 group relative overflow-hidden">
+            {/* Hexagonal background pattern */}
+            <div className="absolute -right-8 -top-8 w-32 h-32 bg-orange-500 opacity-5 transition-all duration-700 group-hover:rotate-180 group-hover:scale-125" style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}></div>
+
+            <div className="relative flex items-center justify-between">
               <div>
                 <p className="text-sm font-bold text-yellow-700 uppercase tracking-wide">Pending</p>
                 <p className="text-4xl font-black text-yellow-900 mt-2">{pendingCount}</p>
                 <p className="text-xs text-yellow-600 mt-1">Awaiting approval</p>
               </div>
-              <div className="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg">
-                ⏳
+              <div className="relative">
+                <div
+                  className="w-16 h-16 bg-orange-500 flex items-center justify-center text-white text-3xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+                  style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}
+                >
+                  <span className="relative z-10 transform group-hover:-rotate-12 transition-transform duration-300">⏳</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="card bg-green-50 border-2 border-green-200">
-            <div className="flex items-center justify-between">
+          <div className="card bg-green-50 border-2 border-green-200 group relative overflow-hidden">
+            {/* Hexagonal background pattern */}
+            <div className="absolute -right-8 -top-8 w-32 h-32 bg-emerald-600 opacity-5 transition-all duration-700 group-hover:rotate-180 group-hover:scale-125" style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}></div>
+
+            <div className="relative flex items-center justify-between">
               <div>
                 <p className="text-sm font-bold text-green-700 uppercase tracking-wide">Approved</p>
                 <p className="text-4xl font-black text-green-900 mt-2">{approvedCount}</p>
                 <p className="text-xs text-green-600 mt-1">Active bookings</p>
               </div>
-              <div className="w-16 h-16 bg-emerald-600 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg">
-                ✓
+              <div className="relative">
+                <div
+                  className="w-16 h-16 bg-emerald-600 flex items-center justify-center text-white text-3xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+                  style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}
+                >
+                  <span className="relative z-10 transform group-hover:-rotate-12 transition-transform duration-300">✓</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="card bg-purple-50 border-2 border-purple-200">
-            <div className="flex items-center justify-between">
+          <div className="card bg-purple-50 border-2 border-purple-200 group relative overflow-hidden">
+            {/* Hexagonal background pattern */}
+            <div className="absolute -right-8 -top-8 w-32 h-32 bg-nu-purple-900 opacity-5 transition-all duration-700 group-hover:rotate-180 group-hover:scale-125" style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}></div>
+
+            <div className="relative flex items-center justify-between">
               <div>
                 <p className="text-sm font-bold text-nu-purple-900 uppercase tracking-wide">Total Rooms</p>
                 <p className="text-4xl font-black text-nu-purple-900 mt-2">{stats.totalRooms}</p>
                 <p className="text-xs text-purple-600 mt-1">{stats.availableRooms} available</p>
               </div>
-              <div className="w-16 h-16 bg-nu-purple-900 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg">
-                🏠
+              <div className="relative">
+                <div
+                  className="w-16 h-16 bg-nu-purple-900 flex items-center justify-center text-white text-3xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+                  style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}
+                >
+                  <span className="relative z-10 transform group-hover:-rotate-12 transition-transform duration-300">🏠</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="card bg-red-50 border-2 border-red-200">
-            <div className="flex items-center justify-between">
+          <div className="card bg-red-50 border-2 border-red-200 group relative overflow-hidden">
+            {/* Hexagonal background pattern */}
+            <div className="absolute -right-8 -top-8 w-32 h-32 bg-red-500 opacity-5 transition-all duration-700 group-hover:rotate-180 group-hover:scale-125" style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}></div>
+
+            <div className="relative flex items-center justify-between">
               <div>
                 <p className="text-sm font-bold text-red-700 uppercase tracking-wide">Cancelled</p>
                 <p className="text-4xl font-black text-red-900 mt-2">{cancelledCount}</p>
                 <p className="text-xs text-red-600 mt-1">Rejected bookings</p>
               </div>
-              <div className="w-16 h-16 bg-red-500 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg">
-                ✕
+              <div className="relative">
+                <div
+                  className="w-16 h-16 bg-red-500 flex items-center justify-center text-white text-3xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+                  style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}
+                >
+                  <span className="relative z-10 transform group-hover:-rotate-12 transition-transform duration-300">✕</span>
+                </div>
               </div>
             </div>
           </div>
@@ -279,8 +316,13 @@ const AdminDashboard: React.FC = () => {
       <div className="space-y-4">
         {filteredBookings.length === 0 ? (
           <div className="card text-center py-12">
-            <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-4xl">📭</span>
+            <div className="relative mx-auto mb-4" style={{ width: '80px', height: '80px' }}>
+              <div
+                className="w-20 h-20 bg-gray-200 flex items-center justify-center mx-auto transition-all duration-500 hover:scale-110 hover:rotate-12"
+                style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}
+              >
+                <span className="text-4xl transform hover:-rotate-12 transition-transform duration-500">📭</span>
+              </div>
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">No bookings found</h3>
             <p className="text-gray-600">Try adjusting your filters or search terms</p>
@@ -302,14 +344,18 @@ const AdminDashboard: React.FC = () => {
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg ${
-                        booking._status === 'pending'
-                          ? 'bg-orange-500'
-                          : booking._status === 'approved'
-                          ? 'bg-emerald-600'
-                          : 'bg-red-500'
-                      }`}>
-                        {booking._status === 'pending' ? '⏳' : booking._status === 'approved' ? '✓' : '✕'}
+                      <div className="relative">
+                        <div className={`w-14 h-14 flex items-center justify-center text-white text-2xl shadow-lg transition-all duration-300 hover:scale-110 hover:rotate-12 ${
+                          booking._status === 'pending'
+                            ? 'bg-orange-500'
+                            : booking._status === 'approved'
+                            ? 'bg-emerald-600'
+                            : 'bg-red-500'
+                        }`} style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}>
+                          <span className="relative z-10 transform hover:-rotate-12 transition-transform duration-300">
+                            {booking._status === 'pending' ? '⏳' : booking._status === 'approved' ? '✓' : '✕'}
+                          </span>
+                        </div>
                       </div>
                       <div>
                         <p className="text-sm text-gray-500 font-semibold">Booking ID</p>
@@ -407,18 +453,20 @@ const AdminDashboard: React.FC = () => {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
           <div className="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl animate-scale-in">
             <div className="text-center">
-              <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 ${
-                confirmModal.action === 'approve'
-                  ? 'bg-emerald-600'
-                  : confirmModal.action === 'delete'
-                  ? 'bg-red-500'
-                  : confirmModal.action === 'reapprove'
-                  ? 'bg-blue-600'
-                  : 'bg-orange-500'
-              }`}>
-                <span className="text-4xl text-white">
-                  {confirmModal.action === 'approve' ? '✓' : confirmModal.action === 'delete' ? '🗑️' : confirmModal.action === 'reapprove' ? '↻' : '✕'}
-                </span>
+              <div className="relative mx-auto mb-4" style={{ width: '80px', height: '80px' }}>
+                <div className={`w-20 h-20 flex items-center justify-center mx-auto shadow-xl ${
+                  confirmModal.action === 'approve'
+                    ? 'bg-emerald-600'
+                    : confirmModal.action === 'delete'
+                    ? 'bg-red-500'
+                    : confirmModal.action === 'reapprove'
+                    ? 'bg-blue-600'
+                    : 'bg-orange-500'
+                }`} style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}>
+                  <span className="text-4xl text-white relative z-10">
+                    {confirmModal.action === 'approve' ? '✓' : confirmModal.action === 'delete' ? '🗑️' : confirmModal.action === 'reapprove' ? '↻' : '✕'}
+                  </span>
+                </div>
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Confirm Action</h3>
               <p className="text-gray-600 mb-6">{confirmModal.message}</p>

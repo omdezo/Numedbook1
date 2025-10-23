@@ -56,17 +56,28 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onSelect }) => {
             Room ID: {room.id.slice(0, 8)}
           </p>
         </div>
-        <span className={`${config.badge} flex items-center gap-1.5 animate-scale-in`}>
-          <span>{config.icon}</span>
-          {config.text}
-        </span>
+        <div className="relative">
+          <div
+            className={`${config.badge} flex items-center gap-1.5 animate-scale-in transition-all duration-300 hover:scale-110 relative overflow-hidden`}
+          >
+            <div className="absolute inset-0 opacity-20 transition-transform duration-500 hover:rotate-180" style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', background: 'currentColor'}}></div>
+            <span className="relative z-10">{config.icon}</span>
+            <span className="relative z-10">{config.text}</span>
+          </div>
+        </div>
       </div>
 
-      {/* Capacity with icon */}
-      <div className="mb-6 p-4 bg-purple-50 rounded-xl border border-nu-purple-200">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-nu-purple-900 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
-            {room.capacity}
+      {/* Capacity with hexagon */}
+      <div className="mb-6 p-4 bg-purple-50 rounded-xl border border-nu-purple-200 relative overflow-hidden group/capacity">
+        <div className="absolute -right-8 -top-8 w-32 h-32 bg-nu-purple-900 opacity-5 transition-all duration-500 group-hover/capacity:rotate-180 group-hover/capacity:scale-125" style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}></div>
+        <div className="flex items-center gap-4 relative z-10">
+          <div className="relative">
+            <div
+              className="w-16 h-16 bg-nu-purple-900 flex items-center justify-center text-white font-black text-2xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+              style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}
+            >
+              <span className="relative z-10 transform group-hover:-rotate-12 transition-transform duration-300">{room.capacity}</span>
+            </div>
           </div>
           <div>
             <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Capacity</p>

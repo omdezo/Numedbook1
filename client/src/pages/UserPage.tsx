@@ -71,8 +71,12 @@ export const UserPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Student Header */}
-      <header className="bg-nu-purple-900 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <header className="bg-nu-purple-900 shadow-lg relative overflow-hidden">
+        {/* Hexagonal decorative patterns */}
+        <div className="absolute -right-16 -top-16 w-48 h-48 bg-nu-gold-700 opacity-10 animate-rotate-slow" style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)'}}></div>
+        <div className="absolute -left-20 -bottom-20 w-56 h-56 bg-white opacity-5 animate-rotate-slow" style={{clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', animationDirection: 'reverse', animationDuration: '30s'}}></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
           <div className="flex items-center justify-between">
             {/* Logo and Title */}
             <div className="flex items-center gap-3">
