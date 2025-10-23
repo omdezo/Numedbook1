@@ -7,7 +7,7 @@ import { BookingModal } from './components/BookingModal';
 import { BookingList } from './components/BookingList';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
-import { AdminDashboard } from './components/AdminDashboard';
+import AdminDashboard from './components/AdminDashboard';
 
 function App() {
   const { user, isAuthenticated, isAdmin, logout, loading: authLoading } = useAuth();

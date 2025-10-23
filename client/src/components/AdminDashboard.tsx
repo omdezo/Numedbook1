@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiService } from '../services/ApiService';
-import { Booking, Room } from '../types';
+import { Booking } from '../types';
 import { format } from 'date-fns';
 
 interface AdminStats {
@@ -10,7 +10,7 @@ interface AdminStats {
   availableRooms: number;
 }
 
-export const AdminDashboard: React.FC = () => {
+const AdminDashboard: React.FC = () => {
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
@@ -452,3 +452,4 @@ export const AdminDashboard: React.FC = () => {
     </div>
   );
 };
+export default AdminDashboard;
