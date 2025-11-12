@@ -217,9 +217,26 @@ This is a **Minimum Viable Product (MVP)** prototype demonstrating:
 - Room check-in system
 - Analytics and reporting
 
+## 🚢 Deployment
+
+### Deploy to Render
+
+This application is ready for deployment on Render. See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for detailed deployment instructions.
+
+**Quick Deploy**:
+1. Push your code to GitHub
+2. Connect to Render
+3. Use the included `render.yaml` configuration
+4. Set environment variables
+5. Deploy!
+
+For step-by-step instructions, troubleshooting, and best practices, refer to the [Deployment Guide](./DEPLOYMENT.md).
+
 ## 📖 Documentation
 
-See `CLAUDE.md` for complete system architecture, OOP patterns, and implementation details.
+- **[CLAUDE.md](./CLAUDE.md)** - Complete system architecture, OOP patterns, and implementation details
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Deployment guide for Render
+- **[QUICKSTART.md](./QUICKSTART.md)** - Quick setup guide
 
 ## 🤝 Contributing
 

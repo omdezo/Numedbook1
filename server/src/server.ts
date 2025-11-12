@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import { BookingRepository } from './repositories/BookingRepository';
 import { RoomRepository } from './repositories/RoomRepository';
 import { UserRepository } from './repositories/UserRepository';
@@ -15,9 +16,19 @@ import { createAdminRoutes } from './routes/adminRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
+// CORS Configuration
+const corsOptions = {
+  origin: NODE_ENV === 'production'
+    ? (process.env.FRONTEND_URL || 'https://your-app.onrender.com')
+    : 'http://localhost:5173',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Dependency Injection - Create instances
@@ -43,9 +54,22 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', message: 'Study Room Booking API is running' });
 });
 
+// Serve static files from the React app in production
+if (NODE_ENV === 'production') {
+  // Serve static files from the client build directory
+  const clientBuildPath = path.join(__dirname, '../../client/dist');
+  app.use(express.static(clientBuildPath));
+
+  // Handle React routing, return all requests to React app
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  });
+}
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🌍 Environment: ${NODE_ENV}`);
   console.log(`📚 API endpoints:`);
   console.log(`\n🔐 Authentication:`);
   console.log(`   - POST   /api/auth/login`);

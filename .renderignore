@@ -1,0 +1,32 @@
+# Render Ignore File
+# Files and directories to ignore during deployment
+
+# Development files
+*.md
+!DEPLOYMENT.md
+.git
+.gitignore
+.vscode
+.idea
+
+# Documentation (except deployment)
+QUICKSTART.md
+CLAUDE.md
+
+# Test files
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+
+# Docker files (not needed for Render deployment)
+Dockerfile
+docker-compose.yml
+nginx.conf
+*.dockerignore
+
+# Other
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*

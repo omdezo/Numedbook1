@@ -28,3 +28,7 @@ Thumbs.db
 # Logs
 logs/
 *.log
+
+# Credentials and secrets
+ghaf.text
+*.text
